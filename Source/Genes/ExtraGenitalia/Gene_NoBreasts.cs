@@ -1,20 +1,19 @@
 ﻿using Verse;
 using rjw;
-using RimWorld;
 
 namespace RJW_Genes
 {
     public class Gene_NoBreasts : RJW_Gene
     {
         Hediff breastsToShrink;
-        internal float oldSize = -1f;
+        internal float? oldSize = null;
 
         public override void PostMake()
         {
             base.PostMake();
             
             // Breasts are removed for female pawns!
-            if (GenderUtility.IsFemale(pawn) && oldSize < 0)
+            if (GenderUtility.IsFemale(pawn) && oldSize == null)
             {
                 RemoveButStoreBreasts();
             }
@@ -25,7 +24,7 @@ namespace RJW_Genes
             base.PostAdd();
 
             // Breasts are removed for female pawns!
-            if (GenderUtility.IsFemale(pawn) && oldSize < 0)
+            if (GenderUtility.IsFemale(pawn) && oldSize == null)
             {
                 RemoveButStoreBreasts();
             }
@@ -36,7 +35,7 @@ namespace RJW_Genes
             base.PostRemove();
             // Re-Add the old breasts
             if (oldSize != null)
-                breastsToShrink.Severity = oldSize;
+                breastsToShrink.Severity = oldSize.Value;
         }
 
         internal void RemoveButStoreBreasts()
