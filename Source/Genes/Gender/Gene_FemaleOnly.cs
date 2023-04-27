@@ -35,6 +35,9 @@ namespace RJW_Genes
                     Sexualizer.sexualize_pawn(pawn);
                 });
                 GenderUtility.AdjustBodyToTargetGender(pawn, Gender.Female);
+
+                if (!pawn.genes.IsXenogene(this))
+                    GenderUtility.RemoveAllSexChangeThoughts(pawn);
             }
         }
 
